@@ -1,46 +1,28 @@
-    async function getPhotographers() {
-        // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
-        // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
-        let photographers = [
-            {
-                "name": "Ma data test",
-                "id": 1,
-                "city": "Paris",
-                "country": "France",
-                "tagline": "Ceci est ma data test",
-                "price": 400,
-                "portrait": "account.png"
-            },
-            {
-                "name": "Autre data test",
-                "id": 2,
-                "city": "Londres",
-                "country": "UK",
-                "tagline": "Ceci est ma data test 2",
-                "price": 500,
-                "portrait": "account.png"
-            },
-        ]
-        // et bien retourner le tableau photographers seulement une fois récupéré
-        return ({
-            photographers: [...photographers, ...photographers, ...photographers]})
-    }
-
-    async function displayData(photographers) {
-        const photographersSection = document.querySelector(".photographer_section");
-
-        photographers.forEach((photographer) => {
-            const photographerModel = photographerFactory(photographer);
-            const userCardDOM = photographerModel.getUserCardDOM();
-            photographersSection.appendChild(userCardDOM);
+//////////////////////////////////////////////////////////////  RECUPERATION DES DONNEES JSON
+async function getPhotographers() {
+    const jsonDatas = await fetch('../data/photographers.json')
+        .then(request => request.json()) // Attend la réception des données puis convertit en json
+        .then(datas => {
+            return datas; // Attend la conversion json puis retourne les données
         });
-    };
+    return jsonDatas;
+}           // => FAUT IL RENVOYER UN MESSAGE SI LA REQUETE NE FONCTIONNE PAS ??
 
-    async function init() {
-        // Récupère les datas des photographes
-        const { photographers } = await getPhotographers();
-        displayData(photographers);
-    };
-    
-    init();
-    
+////////////////////////////////////// AJOUTE LA VIGNETTE DE CHAQUE PHOTOGRAPHE A LA PAGE HTML
+async function displayData(photographers) {
+    const photographersSection = document.querySelector(".photographer_section");
+    photographers.forEach((photographer) => {
+        const photographerModel = photographerFactory(photographer); // renvoie nom + photo du photographe, puis le modèle html de la vignette
+        const userCardDOM = photographerModel.getUserCardDOM(); // retourne le modèle html de la vignette => POURQUOI ?? DEJA FAIT AVANT NON ?!?
+        photographersSection.appendChild(userCardDOM); // ajoute la vignette de chaque photographe à la page
+    });
+};
+
+//////////////////////////////////////////////////////////////    FONCTION D'EXECUTION GLOBALE
+async function init() {
+    const { photographers } = await getPhotographers(); // récupère les datas JSON pour les mettre dans un objet ???
+    displayData(photographers); // exécute displayData sur l'objet photographers
+};
+
+init();
+
