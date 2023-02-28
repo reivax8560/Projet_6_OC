@@ -31,19 +31,39 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+}
+.photographer_section article a {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+}
+.photographer_section article a:focus {
+    outline: 5px solid #D3573C;
+    outline-offset: 15px;
+}
+.photographer_section article a:hover {
+    box-shadow: 2px 2px 15px 10px rgba(0,0,0,0.3);
+}
+.photographer_section article div {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+.photographer_section article img {
+    height: 200px;
+    width: 200px;
+    /* height: 300px;
+    width: 300px; */
+    border-radius: 50%;
+    object-fit: cover;
 }
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 2.25em;
     white-space: nowrap;
     margin-bottom: 0.2em;
-}
-.photographer_section article img {
-    height: 200px;
-    width: 200px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 .photographer_section article p {
     margin: 0;

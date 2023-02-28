@@ -1,6 +1,6 @@
 /////////////////////////////////////////////// RENVOIE NOM + PORTRAIT PHOTOGRAPHE + MODELE VIGNETTE PHOTOGRAPHE
-function photographerFactory(data) { // objet photographer en paramètre à l'exécution
-    const { name, id, city, country, tagline, price, portrait } = data;         // comment ça fonctionne ???
+function photographerFactory(data) {
+    const { name, id, city, country, tagline, price, portrait } = data;
     const picture = `../assets/photographers/${portrait}`;
 
     function getUserCardDOM() {
@@ -10,13 +10,15 @@ function photographerFactory(data) { // objet photographer en paramètre à l'ex
         const link = document.createElement('a');
         link.setAttribute("href", `../photographer.html?id=${id}`);
         link.setAttribute("aria-label", name);
+        const div = document.createElement('div');
         const img = document.createElement('img');
         img.setAttribute("src", picture);
         img.setAttribute("alt", "");
         const h2 = document.createElement('h2');
         h2.setAttribute("aria-label", "photographer's name");
         h2.textContent = name;
-        link.appendChild(img);
+        div.appendChild(img);
+        link.appendChild(div);
         link.appendChild(h2);
         /////////////////////////////////////////////////////////////////////////////
         const p1 = document.createElement('p');

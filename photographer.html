@@ -11,13 +11,14 @@
 
 <body>
   <header>
-    <img src="assets/images/logo.png" class="logo" />
+    <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" />
   </header>
 
   <main id="main">
-    <div class="photograph-header">
+    <div class="photograph-header" id="photograph-header">
       <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
     </div>
+    <div class="photograph-medias" id="photograph-medias"></div>
   </main>
 
   <div id="contact_modal">
@@ -36,6 +37,9 @@
     </div>
   </div>
 
+  <script src="/scripts/pages/index.js"></script>
+  <script src="/scripts/factories/photographer.js"></script>
+  <script src="/scripts/factories/medias.js"></script>
   <script src="/scripts/pages/photographer.js"></script>
   <script src="/scripts/utils/contactForm.js"></script>
 </body>
