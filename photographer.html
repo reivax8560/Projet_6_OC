@@ -6,42 +6,90 @@
   <meta charset="utf-8">
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/55e7772dc0.js" crossorigin="anonymous"></script>
   <title>Fisheye - photographe </title>
 </head>
 
 <body>
-  <header>
-    <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" />
+  <!-------------------------------------------------- HEADER -------------------------------------------------------->
+  <header id="header" aria-hidden="false">
+    <a href="index.html" aria-label="Fisheye Home page">
+      <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" />
+    </a>
   </header>
-
-  <main id="main">
-    <div class="photograph-header" id="photograph-header">
-      <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
-    </div>
-    <div class="photograph-medias" id="photograph-medias"></div>
+  <!-------------------------------------------------- MAIN -------------------------------------------------------->
+  <main id="main" aria-hidden="false">
+    <section class=" photograph-header" id="photograph-header">
+      <button class="contact_button" id="contactBtn">Contactez-moi</button>
+    </section>
+    <section class="photograph-medias" id="photograph-medias">
+      <div class="conteneur-select">
+        <label for="mediasSelect" class="select-label">Trier par</label>
+        <select name="medias" id="mediasSelect" class="select" aria-label="Order by">
+          <option value="popularity">Popularité</option>
+          <option value="date">Date</option>
+          <option value="title">Titre</option>
+        </select>
+      </div>
+      <div class="medias-grid" id="medias-grid"></div>
+    </section>
+    <aside class="box-informations" id="box-informations">
+      <p>Nombre de likes <i class="fa-solid fa-heart heart-in-box"></i></p>
+      <!-- <p>Tarif / jour</p> -->
+    </aside>
   </main>
-
-  <div id="contact_modal">
+  <!-------------------------------------------------- MODAL FORM -------------------------------------------------------->
+  <div id="contact_modal" class="contact_modal" role="dialog" aria-hidden="true">
     <div class="modal">
       <header>
-        <h2>Contactez-moi</h2>
-        <img src="assets/icons/close.svg" onclick="closeModal()" />
+        <h2 id="modalTitle">Contactez-moi</h2>
+        <img src="assets/icons/close.svg" id="closeIcon" tabindex="0" />
       </header>
-      <form>
-        <div>
-          <label>Prénom</label>
-          <input />
+      <form method="GET" action="photographer.html" id="form" class="form">
+        <div id="firstNameDiv">
+          <label for="firstName">Prénom</label>
+          <input type="text" id="firstName" />
+          <span id="errorFirstName" class="error"></span>
         </div>
-        <button class="contact_button">Envoyer</button>
+        <div id="lastNameDiv">
+          <label for="lastName">Nom</label>
+          <input type="text" id="lastName" />
+          <span id="errorLastName" class="error"></span>
+        </div>
+        <div id="emailDiv">
+          <label for="email">Email</label>
+          <input type="text" id="email" />
+          <span id="errorEmail" class="error"></span>
+        </div>
+        <div id="messageDiv">
+          <label for="message">Votre message</label>
+          <textarea id="message" rows="4"></textarea>
+        </div>
+        <button type="submit" class="contact_button submit_button">Envoyer</button>
       </form>
     </div>
   </div>
+  <!-------------------------------------------------- LIGHTBOX -------------------------------------------------------->
+  <div id="lightbox_bg" class="lightbox_bg" role="dialog" aria-hidden="true">
 
-  <script src="/scripts/pages/index.js"></script>
-  <script src="/scripts/factories/photographer.js"></script>
-  <script src="/scripts/factories/medias.js"></script>
-  <script src="/scripts/pages/photographer.js"></script>
-  <script src="/scripts/utils/contactForm.js"></script>
+    <ul class="carrousel" id="carrousel">
+      <!-- <li class="item" id="item">
+        <i class="fa-solid fa-xmark fa-3x close" id="close"></i>
+        <i class="fa-solid fa-chevron-left fa-3x previous" id="previous"></i>
+        <div>
+          <img class="slide" src="" alt="">
+          <h2>Arc-en-ciel</h2>
+        </div>
+        <i class="fa-solid fa-chevron-right fa-3x next"></i>
+      </li> -->
+    </ul>
+  </div>
+
+  <script src="./scripts/utils/request.js"></script>
+  <script src="./scripts/factories/photographer.js"></script>
+  <script src="./scripts/factories/medias.js"></script>
+  <script src="./scripts/utils/contactForm.js"></script>
+  <script src="./scripts/pages/photographer.js"></script>
 </body>
 
 </html>

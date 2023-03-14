@@ -1,54 +1,87 @@
-///////////////////////////////////////////////////////////// RECUPERATION ID URL
+//////////////////////////////////////////////////////////// RECUPERATION ID URL
 const url = new URL(document.location);
 const urlParams = url.searchParams;
 const ID = urlParams.get('id');
 
-//////////////////////////////////////////////// CREATION DU HEADER PHOTOGRAPHE
-async function displayHeader() {
-    const { photographers } = await getPhotographers();
-    const photographerDatas = photographers.find(photographer => photographer.id == ID);
-
+//////////////////////////////////////////////////// CREATION HEADER PHOTOGRAPHE
+function displayHeader(photographers) {
     const photographHeader = document.getElementById('photograph-header');
-
-    const div = document.createElement('div');
-    div.setAttribute("class", "div-text");
-    photographHeader.prepend(div);
-
-    const p2 = document.createElement('p');
-    p2.textContent = photographerDatas.tagline;
-    div.prepend(p2);
-
-    const p1 = document.createElement('p');
-    p1.textContent = photographerDatas.city + ", " + photographerDatas.country;
-    div.prepend(p1);
-
-    const h2 = document.createElement('h2');
-    h2.textContent = photographerDatas.name;
-    div.prepend(h2);
-
-    const img = document.createElement('img');
-    const path = `assets/photographers/${photographerDatas.portrait}`;
-    img.setAttribute("src", path);
-    img.setAttribute("class", "portrait");
-    photographHeader.appendChild(img);
+    const photographerDatas = photographers.find(photographer => photographer.id == ID);
+    const photographerPattern = photographerFactory(photographerDatas);
+    const headerDOM = photographerPattern.getHeaderDOM();
+    photographHeader.prepend(headerDOM.divText);
+    photographHeader.append(headerDOM.divPhoto);
+    // console.log(photographerPattern.name);
 }
-displayHeader();
-
-
-/////////////////////////////////////////// CREATION DES MEDIAS PHOTOGRAPHE
+//////////////////////////////////////////////// CREATION DES MEDIAS PHOTOGRAPHE
 function displayMedias(medias) {
-    const photographMedias = document.getElementById('photograph-medias');
+    const mediaSection = document.getElementById('medias-grid');
     medias.forEach((media) => {
         if (media.photographerId == ID) {
-            const allMedias = mediaFactory(media);
-            photographMedias.appendChild(allMedias);
+            const mediaModel = mediaFactory(media);
+            const mediaGrid = mediaModel.getMediasGrid();
+            mediaSection.appendChild(mediaGrid);
         }
     });
 }
-
-////////////////////////////////////////////////////////////// INIT MEDIAS
-async function initMedias() {
-    const { medias } = await getPhotographers();
-    displayMedias(medias);
+///////////////////////////////////////////////////// CREATION BOX LIKES/TARIF
+function displayBoxInfo(photographers) {
+    const boxInformations = document.getElementById('box-informations');
+    const photographerDatas = photographers.find(photographer => photographer.id == ID);
+    const photographerPattern = photographerFactory(photographerDatas);
+    const boxInfoDOM = photographerPattern.getBoxInfoDOM();
+    boxInformations.append(boxInfoDOM);
 }
-initMedias();
+/////////////////////////////////////////////////////////////// MODALE /////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////// AFFICHAGE/FERMETURE
+contactBtn.addEventListener("click", () => {
+    displayModal();
+});
+closeIcon.addEventListener("click", () => {
+    closeModal();
+});
+////////////////////////////////////////////////// AJOUT NOM PHOTOGRAPHE
+function displayName(photographers) {
+    const modalTitle = document.getElementById('modalTitle');
+    const photographerDatas = photographers.find(photographer => photographer.id == ID);
+    const photographer = photographerFactory(photographerDatas);
+    const name = photographer.name;
+    const br = document.createElement('br');
+    modalTitle.appendChild(br);
+    modalTitle.innerHTML += name;
+}
+///////////////////////////////////////////////////////// VALIDATION FORMULAIRE
+firstName.addEventListener('input', checkFirstName, false);
+lastName.addEventListener('input', checkLastName, false);
+email.addEventListener('input', checkEmail, false);
+form.addEventListener('submit', checkForm, false);
+
+/////////////////////////////////////////////////////////////// LIGHTBOX /////////////////////////////////////////////////////////////////////////
+
+function displayLightBox() {
+    const mediaLink = document.querySelectorAll('.media-link');
+    mediaLink.forEach(link => link.addEventListener('click', e => {
+        e.preventDefault();
+        const lightbox_bg = document.getElementById('lightbox_bg');
+        lightbox_bg.style.display = "block";
+        const model = mediaFactory(link);
+        const path = e.currentTarget.getAttribute('data-id');
+        const name = e.currentTarget.getAttribute('data-title');
+        const lightBox = model.getLightBox(path, name);
+        const carrousel = document.getElementById('carrousel');
+        carrousel.appendChild(lightBox);
+    })
+    )
+}
+
+///////////////////////////////////////////////////////////// EXECUTION GLOBALE
+async function initPhotographer() {
+    const { photographers, medias } = await getPhotographers();
+    displayHeader(photographers);
+    displayMedias(medias);
+    displayBoxInfo(photographers);
+    displayName(photographers);
+    displayLightBox();
+}
+initPhotographer();

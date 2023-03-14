@@ -1,12 +1,11 @@
-/////////////////////////////////////////////// RENVOIE NOM + PORTRAIT PHOTOGRAPHE + MODELE VIGNETTE PHOTOGRAPHE
 function photographerFactory(data) {
     const { name, id, city, country, tagline, price, portrait } = data;
     const picture = `../assets/photographers/${portrait}`;
-
+    /////////////////////////////// CREATION VIGNETTE PHOTOGRAPHE (PAGE ACCUEIL)
     function getUserCardDOM() {
         const article = document.createElement('article');
         article.setAttribute("aria-label", "photographer presentation thumbnail");
-        /////////////////////////////////////////////// LIEN VERS PAGE PHOTOGRAPHE (IMG + H2)
+        //// LIEN VERS PAGE PHOTOGRAPHE (IMG + H2)
         const link = document.createElement('a');
         link.setAttribute("href", `../photographer.html?id=${id}`);
         link.setAttribute("aria-label", name);
@@ -20,7 +19,7 @@ function photographerFactory(data) {
         div.appendChild(img);
         link.appendChild(div);
         link.appendChild(h2);
-        /////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////
         const p1 = document.createElement('p');
         p1.setAttribute("aria-label", "origin of the photographer");
         p1.className = 'ligne-1';
@@ -39,5 +38,39 @@ function photographerFactory(data) {
         article.appendChild(p3);
         return (article);
     }
-    return { name, picture, getUserCardDOM }
+    ///////////////////////////// CREATION HEADER PHOTOGRAPHE (PAGE PHOTOGRAPHE)
+    function getHeaderDOM() {
+        const divText = document.createElement('div');
+        divText.className = 'div-text';
+        const p2 = document.createElement('p');
+        p2.className = 'tagline';
+        p2.textContent = tagline;
+        divText.prepend(p2);
+        const p1 = document.createElement('p');
+        p1.className = 'origins';
+        p1.textContent = city + ", " + country;
+        divText.prepend(p1);
+        const h1 = document.createElement('h1');
+        h1.className = 'name';
+        h1.setAttribute("aria-label", "photographer's name");
+        h1.textContent = name;
+        divText.prepend(h1);
+        ////////////////////////////////////////
+        const divPhoto = document.createElement('div');
+        divPhoto.className = 'div-photo';
+        const img = document.createElement('img');
+        img.setAttribute("src", picture);
+        img.className = 'portrait';
+        divPhoto.appendChild(img);
+        ///////////////////////////////////////
+        return { divText, divPhoto }
+    }
+    ////////////////////////////////////////////////// CREATION PRIX PHOTOGRAPHE
+    function getBoxInfoDOM() {
+        const priceParagraph = document.createElement('p');
+        priceParagraph.textContent = `${price}€ / jour`;
+        return priceParagraph;
+    }
+
+    return { name, picture, getUserCardDOM, getHeaderDOM, getBoxInfoDOM }
 }
