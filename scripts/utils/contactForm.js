@@ -14,8 +14,8 @@ const message = document.getElementById('message');
 const header = document.getElementById('header');
 const main = document.getElementById('main');
 const modal = document.getElementById("contact_modal");
-const closeIcon = document.getElementById("closeIcon");
-const contactBtn = document.getElementById('contactBtn');
+const closeForm = document.getElementById("closeForm");
+const openForm = document.getElementById('openForm');
 /////////////////////////////////////////////////////////////////////// REGEX
 const regex1 = /^([A-Za-zàâéèëêïîôùüçœ\-\']){2,}$/; // nom prenom
 const regex2 = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // email
@@ -26,7 +26,7 @@ function displayModal() {
     modal.setAttribute('aria-hidden', 'false');
     header.setAttribute('aria-hidden', 'true');
     main.setAttribute('aria-hidden', 'true');
-    closeIcon.focus();
+    closeForm.focus();
     body.className = "body-scroll-none";
 }
 //////////////////////////////////////////////////////////////// FERMER MODALE
@@ -36,14 +36,9 @@ function closeModal() {
     header.setAttribute('aria-hidden', 'false');
     main.setAttribute('aria-hidden', 'false');
     body.className = "";
-    contactBtn.focus();
+    openForm.focus();
+    // faut il faire un removeEventListener pour l'accès au clavier ???
 }
-///////////////////////////////////////////////////// FONCTIONNE PAS !!! ///////////////////////////////////////
-closeIcon.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') {
-        closeModal();
-    }
-})
 
 //////////////////////////////////////////////////// VERIFICATION DU FORMULAIRE
 

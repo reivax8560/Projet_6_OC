@@ -20,7 +20,7 @@
   <!-------------------------------------------------- MAIN -------------------------------------------------------->
   <main id="main" aria-hidden="false">
     <section class=" photograph-header" id="photograph-header">
-      <button class="contact_button" id="contactBtn">Contactez-moi</button>
+      <button class="contact_button" id="openForm">Contactez-moi</button>
     </section>
     <section class="photograph-medias" id="photograph-medias">
       <div class="conteneur-select">
@@ -43,7 +43,7 @@
     <div class="modal">
       <header>
         <h2 id="modalTitle">Contactez-moi</h2>
-        <img src="assets/icons/close.svg" id="closeIcon" tabindex="0" />
+        <img src="assets/icons/close.svg" id="closeForm" tabindex="0" />
       </header>
       <form method="GET" action="photographer.html" id="form" class="form">
         <div id="firstNameDiv">
@@ -72,16 +72,16 @@
   <!-------------------------------------------------- LIGHTBOX -------------------------------------------------------->
   <div id="lightbox_bg" class="lightbox_bg" role="dialog" aria-hidden="true">
 
-    <ul class="carrousel" id="carrousel">
-      <!-- <li class="item" id="item">
-        <i class="fa-solid fa-xmark fa-3x close" id="close"></i>
+    <ul class="lightBox" id="lightBox">
+      <li class="item" id="item">
+        <i class="fa-solid fa-xmark fa-3x close" id="closeLB" tabindex="0"></i>
         <i class="fa-solid fa-chevron-left fa-3x previous" id="previous"></i>
-        <div>
-          <img class="slide" src="" alt="">
-          <h2>Arc-en-ciel</h2>
+        <div class="mediaContainer" id="mediaContainer">
+          <!-- <img class="slide" src="" alt="">
+          <h2>Arc-en-ciel</h2> -->
         </div>
-        <i class="fa-solid fa-chevron-right fa-3x next"></i>
-      </li> -->
+        <i class="fa-solid fa-chevron-right fa-3x next" id="nextBtn"></i>
+      </li>
     </ul>
   </div>
 
@@ -89,6 +89,7 @@
   <script src="./scripts/factories/photographer.js"></script>
   <script src="./scripts/factories/medias.js"></script>
   <script src="./scripts/utils/contactForm.js"></script>
+  <script src="./scripts/utils/lightBox.js"></script>
   <script src="./scripts/pages/photographer.js"></script>
 </body>
 

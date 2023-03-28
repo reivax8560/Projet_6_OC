@@ -289,7 +289,7 @@ main {
     width: 100%;
     height: 100%;
 }
-.carrousel {
+.lightBox {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -316,9 +316,16 @@ main {
     color: #901C1C
 }
 .previous {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     color: #901C1C
 }
 .next {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-50%, -50%);
     color: #901C1C
 }
 .slide {

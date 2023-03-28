@@ -1,21 +1,45 @@
-// fonction previousSLide() + nextSlide() + closeLightBox()
-// fonctions navigation au clavier
+const closeLB = document.getElementById('closeLB');
+const lightbox_bg = document.getElementById("lightbox_bg");
 
-// EXEMPLE
-// const goToNextSlide = () => {
-//     if (currentItemPosition + 1 >=  $carouselItems.length) {
 
-//         const lastItem = `.item-${currentItemPosition}`
+function displayLightBox(link) {
+    ///////////////////////////////////////////// AFFICHAGE LIGHTBOX
+    const lightbox_bg = document.getElementById('lightbox_bg');
+    lightbox_bg.style.display = "block";
+    lightbox_bg.ariaHidden = 'false';
+    header.ariaHidden = 'true';
+    main.ariaHidden = 'true';
+    body.className = "body-scroll-none";
+    ///////////////////////////////////////////// CREATION IMAGE + TITRE
+    const slide = document.createElement('img');
+    slide.setAttribute('src', `./assets/Sample_Photos/${link.dataset.path}`);
+    slide.className = "slide";
+    const title = document.createElement('h2');
+    title.textContent = link.dataset.title;
+    ///////////////////////////////////////////// AFFICHAGE DU MEDIA DANS LA LIGHTBOX
+    const mediaContainer = document.getElementById('mediaContainer');
+    while (mediaContainer.firstChild) {
+        mediaContainer.removeChild(mediaContainer.firstChild);
+    }
+    mediaContainer.appendChild(slide);
+    mediaContainer.appendChild(title);
+}
 
-//         currentItemPosition = 0
-//         const currentItem = `.item-${currentItemPosition}`
+function closeLightbox() {
+    lightbox_bg.style.display = "none";
+    lightbox_bg.setAttribute('aria-hidden', 'true');
+    header.setAttribute('aria-hidden', 'false');
+    main.setAttribute('aria-hidden', 'false');
+    body.className = "";
+    // faut il faire un removeEventListener pour l'accès au clavier ???
+}
 
-//         setNodeAttributes(lastItem, currentItem)
-//     } else {
-//         currentItemPosition += 1
-//         const lastItem = `.item-${currentItemPosition - 1}`
-//         const currentItem = `.item-${currentItemPosition}`
+function nextPhoto() {
 
-//         setNodeAttributes(lastItem, currentItem)
-//     }
-//  }
+}
+
+
+
+
+
+

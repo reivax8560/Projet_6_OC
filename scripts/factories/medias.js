@@ -5,7 +5,6 @@ function mediaFactory(data) {
     function getMediasGrid() {
         //////////////////////////////////////////////////// LIEN
         const link = document.createElement('a');
-        link.setAttribute("data-id", image);
         link.setAttribute("data-title", title);
         link.className = 'media-link';
         //////////////////////////////////////////////////// ARTICLE
@@ -34,6 +33,7 @@ function mediaFactory(data) {
         comments.appendChild(divLikes);
         //////////////////////////////////////////////////// MEDIA VIDEO
         if (video) {
+            link.setAttribute("data-path", video);
             const vid = document.createElement('video');
             vid.setAttribute("controls", "");
             vid.setAttribute("alt", "");
@@ -47,6 +47,7 @@ function mediaFactory(data) {
             link.appendChild(article);
             ///////////////////////////////////////////////// MEDIA PHOTO
         } else if (image) {
+            link.setAttribute("data-path", image);
             const img = document.createElement('img');
             img.setAttribute("src", `./assets/Sample_photos/${image}`);
             img.setAttribute("alt", "");
@@ -58,79 +59,29 @@ function mediaFactory(data) {
         return (link)
     }
 
-    function getLightBox(path, name) {
-
-        const item = document.createElement('li');
-        item.className = "item";
-        const close = document.createElement('i');
-        close.className = "fa-solid fa-xmark fa-3x close";
-        const previous = document.createElement('i');
-        previous.className = "fa-solid fa-chevron-left fa-3x previous";
-        const div = document.createElement('div');
-
-        const slide = document.createElement('img');
-        slide.setAttribute('src', `./assets/Sample_Photos/${path}`);
-        slide.className = "slide";
-
-        const title = document.createElement('h2');
-        title.textContent = name;
-        const next = document.createElement('i');
-        next.className = "fa-solid fa-chevron-right fa-3x next";
-
-        div.appendChild(slide);
-        div.appendChild(title);
-        item.appendChild(close);
-        item.appendChild(previous);
-        item.appendChild(div);
-        item.appendChild(next);
-
-        return (item)
-    }
-
-    // function getLightBox(path, name) {
-
-    //     const item = document.createElement('li');
-    //     item.className = "item";
-    //     const close = document.createElement('i');
-    //     close.className = "fa-solid fa-xmark fa-3x close";
-    //     const previous = document.createElement('i');
-    //     previous.className = "fa-solid fa-chevron-left fa-3x previous";
-    //     const div = document.createElement('div');
-    //     const title = document.createElement('h2');
-    //     title.textContent = name;
-    //     const next = document.createElement('i');
-    //     next.className = "fa-solid fa-chevron-right fa-3x next";
-
-    //     if (video) {
-    //         const vid = document.createElement('video');
-    //         vid.setAttribute("controls", "");
-    //         vid.setAttribute("alt", "");
-    //         const source = document.createElement('source');
-    //         source.setAttribute("src", `./assets/Sample_photos/${path}`);
-    //         source.setAttribute("type", "video/mp4");
-    //         vid.appendChild(source);
-    //         div.appendChild(vid);
-    //         div.appendChild(title);
-    //         item.appendChild(close);
-    //         item.appendChild(previous);
-    //         item.appendChild(div);
-    //         item.appendChild(next);
-
-    //     } else if (image) {
-    //         const slide = document.createElement('img');
-    //         slide.setAttribute('src', `./assets/Sample_Photos/${path}`);
-    //         slide.className = "slide";
-    //         div.appendChild(slide);
-    //         div.appendChild(title);
-    //         item.appendChild(close);
-    //         item.appendChild(previous);
-    //         item.appendChild(div);
-    //         item.appendChild(next);
-    //     }
-
-    //     return (item)
-    // }
-
-    return { getMediasGrid, getLightBox, id }
+    return { getMediasGrid, id }
 }
 
+
+
+
+    //////////////////////////////////////////////////////////
+    // function getLightBox(path, name) {
+
+    //     const slide = document.createElement('img');
+    //     slide.setAttribute('src', `./assets/Sample_Photos/${path}`);
+    //     slide.setAttribute("data-path", image);
+    //     slide.className = "slide";
+
+    //     const title = document.createElement('h2');
+    //     title.textContent = name;
+
+    //     const mediaContainer = document.getElementById('mediaContainer');
+    //     while (mediaContainer.firstChild) {
+    //         mediaContainer.removeChild(mediaContainer.firstChild);
+    //     }
+    //     mediaContainer.appendChild(slide);
+    //     mediaContainer.appendChild(title);
+
+    //     return (mediaContainer)
+    // }
