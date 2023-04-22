@@ -2,13 +2,15 @@
 function mediaFactory(data) {
     const { id, photographerId, title, image, video, likes, date, price } = data;
 
-    function getAllMedias() {
+    function getMediasGrid() {
+        //////////////////////////////////////////////////// LIEN
+        const link = document.createElement('a');
+        link.setAttribute("data-title", title);
+        link.className = 'media-link';
         //////////////////////////////////////////////////// ARTICLE
         const article = document.createElement('article');
+        article.setAttribute("aria-label", "");
         article.className = 'article';
-        article.setAttribute('data-popularity', likes);
-        article.setAttribute('data-title', title);
-        article.setAttribute('data-date', date);
         //////////////////////////////////////////////////// TITRE MEDIA
         const mediaName = document.createElement('p');
         mediaName.textContent = title;
@@ -22,8 +24,6 @@ function mediaFactory(data) {
         heartIcon.className = 'fa-solid fa-heart fa-lg heart-media';
         heartIcon.setAttribute("aria-label", "likes");
         heartIcon.setAttribute('data-likes', likes);
-        heartIcon.setAttribute('data-clicked', false);
-        heartIcon.setAttribute('tabindex', '0');
 
         const divLikes = document.createElement('div');
         divLikes.className = 'div-likes';
@@ -36,37 +36,35 @@ function mediaFactory(data) {
         comments.appendChild(divLikes);
         //////////////////////////////////////////////////// MEDIA VIDEO
         if (video) {
+            link.setAttribute("data-path", video);
+            link.setAttribute("data-type", 'video');
             const vid = document.createElement('video');
             vid.setAttribute("controls", "");
             vid.setAttribute("alt", "");
-            vid.setAttribute("data-type", 'video');
-            vid.setAttribute("data-path", video);
-            vid.setAttribute("data-title", title);
-            vid.setAttribute('tabindex', '0');
-            vid.className = 'media-content';
+            vid.className = 'video';
             const source = document.createElement('source');
             source.setAttribute("src", `assets/Sample_photos/${video}`);
             source.setAttribute("type", "video/mp4");
             vid.appendChild(source);
             article.appendChild(vid);
             article.appendChild(comments);
+            link.appendChild(article);
             ///////////////////////////////////////////////// MEDIA PHOTO
         } else if (image) {
+            link.setAttribute("data-path", image);
+            link.setAttribute("data-type", 'photo');
             const img = document.createElement('img');
             img.setAttribute("src", `./assets/Sample_photos/${image}`);
             img.setAttribute("alt", "");
-            img.setAttribute("data-type", 'photo');
-            img.setAttribute("data-path", image);
-            img.setAttribute("data-title", title);
-            img.setAttribute('tabindex', '0');
-            img.className = 'media-content';
+            img.className = 'photo';
             article.appendChild(img);
             article.appendChild(comments);
+            link.appendChild(article);
         }
-        return (article)
+        return (link)
     }
 
-    return { getAllMedias, id }
+    return { getMediasGrid, id }
 }
 
 

@@ -33,11 +33,14 @@
       </div>
       <div class="medias-grid" id="medias-grid"></div>
     </section>
-    <aside class="box-informations" id="box-informations">
-      <p>Nombre de likes <i class="fa-solid fa-heart heart-in-box"></i></p>
-      <!-- <p>Tarif / jour</p> -->
-    </aside>
   </main>
+  <!-------------------------------------------------- BOX INFOS/LIKES -------------------------------------------------------->
+  <aside class="box-informations" id="infos-box">
+    <div class="likes">
+      <p id="likesTotal"></p>
+      <i class="fa-solid fa-heart heart-in-box"></i>
+    </div>
+  </aside>
   <!-------------------------------------------------- MODAL FORM -------------------------------------------------------->
   <div id="contact_modal" class="contact_modal" role="dialog" aria-hidden="true">
     <div class="modal">
@@ -73,14 +76,14 @@
   <div id="lightbox_bg" class="lightbox_bg" role="dialog" aria-hidden="true">
 
     <ul class="lightBox" id="lightBox">
-      <li class="item" id="item">
-        <i class="fa-solid fa-xmark fa-3x close" id="closeLB" tabindex="0"></i>
-        <i class="fa-solid fa-chevron-left fa-3x previous" id="previous"></i>
-        <div class="mediaContainer" id="mediaContainer">
-          <!-- <img class="slide" src="" alt="">
-          <h2>Arc-en-ciel</h2> -->
-        </div>
-        <i class="fa-solid fa-chevron-right fa-3x next" id="nextBtn"></i>
+      <li class="item" id="item" role="dialog" aria-label="image closeup view">
+        <i class="fa-solid fa-xmark fa-2x close" id="closeLB" tabindex="0" role="button" aria-label="close dialog"></i>
+        <!-- <span class="close" id="closeLB" tabindex="0">X</span> -->
+        <i class="fa-solid fa-chevron-left fa-2x previous" id="previous" role="link" aria-label="previous image"></i>
+        <!-- <SPan class="previous" id="previous">Prev</SPan> -->
+        <div class="mediaContainer" id="mediaContainer"></div>
+        <i class="fa-solid fa-chevron-right fa-2x next" id="nextBtn" role="link" aria-label="next image"></i>
+        <!-- <span class="next" id="nextBtn">Next</span> -->
       </li>
     </ul>
   </div>

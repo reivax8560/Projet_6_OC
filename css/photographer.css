@@ -7,9 +7,11 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 .body-scroll-none {
     overflow: hidden;
 }
+
 /*////////////////////////////// HEADER  //////////////////////////////*/
 header {
     display: flex;
@@ -18,10 +20,12 @@ header {
     align-items: center;
     margin: 30px 80px;
 }
+
 .logo {
     height: 50px;
     margin-left: 0;
 }
+
 /*/////////////////////////////////// MAIN  ////////////////////////////////*/
 main {
     display: flex;
@@ -30,6 +34,7 @@ main {
     align-items: center;
     margin: 0 80px;
 }
+
 /*//////////////////////////// PHOTOGRAPHE-HEADER  ///////////////////////////*/
 
 .photograph-header {
@@ -46,20 +51,24 @@ main {
     flex-direction: column;
     margin: 40px 40px;
 }
+
 .name {
     color: #D3573C;
     font-size: 4em;
     font-weight: normal;
     margin: 0;
 }
+
 .origins {
     color: #901C1C;
     font-size: 1.5em;
     margin: 0;
 }
+
 .tagline {
     font-size: 1.1em;
 }
+
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -73,6 +82,7 @@ main {
     cursor: pointer;
     margin: 40px 40px;
 }
+
 .div-photo {
     height: 200px;
     width: 200px;
@@ -81,6 +91,7 @@ main {
     position: relative;
     margin: 40px 40px;
 }
+
 .portrait {
     height: 290px;
     width: 290px;
@@ -89,19 +100,23 @@ main {
     top: -15%;
     object-fit: cover;
 }
+
 /*//////////////////////////// PHOTOGRAPHE-MEDIAS  ///////////////////////////*/
 .photograph-medias {
     width: 100%;
     margin-top: 20px;
 }
+
 .conteneur-select {
     display: flex;
     align-items: flex-start;
 }
+
 .select-label {
     font-weight: bold;
     margin: 10px 20px 0 0;
 }
+
 .select {
     font-size: 20px;
     font-weight: bold;
@@ -114,54 +129,65 @@ main {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .medias-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 5%;
     margin-top: 30px;
 }
-.media-link {
+
+/* .article {
     text-decoration: none;
-}
-.article {
+} */
+
+/* .article {
     text-align: center;
-}
-.photo {
+} */
+
+.media-content {
     height: 300px;
     width: 340px;
     object-fit: cover;
     border-radius: 5px;
 }
-.video {
+
+/* .video {
     border-radius: 5px;
     height: 300px;
     width: 340px;
-}
+} */
+
 .comments {
     display: flex;
     justify-content: space-between;
     padding: 5px 10px 5px 10px;
 }
+
 .titre-media {
     color: #901C1C;
     font-size: 24px;
     font-weight: bold;
     margin: 0;
 }
+
 .div-likes {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .likes-media {
     color: #901C1C;
     font-size: 22px;
     margin: 0 5px 0 0;
     font-weight: bold;
 }
+
 .heart-media {
     color: #901C1C;
 }
+
 /*///////////////////////////////////////////////////////////*/
 .box-informations {
     background: #D3573C;
@@ -175,9 +201,15 @@ main {
     font-weight: bold;
     border-radius: 5px;
 }
+.likes {
+    display: flex;
+    align-items: center;
+}
 .heart-in-box {
     color: black;
+    margin-left: 10px;
 }
+
 /*//////////////////////////// MODAL  ///////////////////////////*/
 #contact_modal {
     display: none;
@@ -188,6 +220,7 @@ main {
     width: 100%;
     height: 100%;
 }
+
 .modal {
     position: fixed;
     left: 50%;
@@ -208,23 +241,27 @@ main {
     /* height: 100vh;
     overflow-y: hidden; */
 }
+
 .modal header {
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
     margin: 0 0 1.2em 0;
 }
+
 .modal header h2 {
     font-size: 2.3em;
     font-weight: bold;
     text-align: left;
     margin: 0;
 }
+
 .modal header img {
     cursor: pointer;
     width: 30px;
     margin-top: 10px;
 }
+
 /*//////////////////////////// FORMULAIRE  ///////////////////////////*/
 .form {
     width: 100%;
@@ -232,11 +269,13 @@ main {
     flex-direction: column;
     box-sizing: border-box;
 }
+
 .form label {
     color: #312E2E;
     font-size: 1.4em;
     margin: 0;
 }
+
 .form div {
     display: flex;
     flex-direction: column;
@@ -272,6 +311,7 @@ main {
     padding: 0 15px;
     margin-top: 3px;
 }
+
 .submit_button {
     margin: 0.5em 0 0 0;
     padding: 0.4em;
@@ -279,6 +319,7 @@ main {
     height: 40px;
     font-size: 0.8em;
 }
+
 /*//////////////////////////// LIGHTBOX  ///////////////////////////*/
 .lightbox_bg {
     display: none;
@@ -289,13 +330,14 @@ main {
     width: 100%;
     height: 100%;
 }
+
 .lightBox {
     position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    height: 90%;
+    width: 70%;
+    height: 100%;
     display: flex;
     justify-content: center;
     margin: auto;
@@ -303,37 +345,44 @@ main {
     background: white;
     list-style: none;
 }
+
 .item {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     position: relative;
 }
+
 .close {
     position: absolute;
-    top: 40px;
-    right: 0;
+    top: 50px;
+    right: -30px;
     color: #901C1C
 }
+
 .previous {
     position: absolute;
     top: 50%;
+    left: -30px;
     transform: translateY(-50%);
     color: #901C1C
 }
+
 .next {
     position: absolute;
     top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
+    right: -30px;
+    transform: translateY(-50%);
     color: #901C1C
 }
+
 .slide {
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 550px;
     object-fit: cover;
     margin: 5px 20px 5px 20px;
 }
+
 .item h2 {
     color: #901C1C;
     margin: 0;
