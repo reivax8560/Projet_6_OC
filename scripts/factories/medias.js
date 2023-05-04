@@ -62,7 +62,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 ///////////////////////////////////////////////// MEDIA PHOTO
             } else if (image) {
                 const img = document.createElement('img');
-                img.setAttribute("src", `./assets/Sample_photos/${image}`);
+                img.setAttribute("src", `../assets/Sample_photos/${image}`);
                 img.setAttribute("alt", "");
                 img.setAttribute("data-type", 'photo');
                 img.setAttribute("data-path", image);
