@@ -13,7 +13,7 @@ function displayPhotographerPage(photographers, medias) {
     ///////////////////////////////////////////////////////////// MEDIAS PHOTOGRAPHE
     const mediasGrid = document.getElementById('medias-grid');
     const medFactory = mediaFactory(medias, photographerId, mediasGrid);
-    const allMedias = medFactory.sortByPopularity();
+    const allMedias = medFactory.createAllMediasHTML();
     ////////////////////////////////////////////////////////////// BOX-INFO (LIKES + PRIX) ////////////////////////////////////////////////////////////
     let totalLikes = allMedias.getTotalLikes();
     const totalLikeBox = document.getElementById('likesTotal'); // recup du paragraphe "likes" dans la box (aside > div > p+i)

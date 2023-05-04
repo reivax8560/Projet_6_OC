@@ -1,6 +1,6 @@
 function photographerFactory(data, header, infoBox) {
     const { name, id, city, country, tagline, price, portrait } = data;
-    const picture = `../assets/photographers/${portrait}`;
+    const picture = `./assets/photographers/${portrait}`;
     /////////////////////////////// CREATION VIGNETTE PHOTOGRAPHE (PAGE ACCUEIL)
     function getUserCardDOM() {
         const article = document.createElement('article');

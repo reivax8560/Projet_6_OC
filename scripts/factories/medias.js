@@ -35,10 +35,9 @@ function mediaFactory(datas, photographerId, mediasgrid) {
             divLikes.appendChild(mediaLikes);
             divLikes.appendChild(heartIcon);
             /////////////////////////////////////////////////// DATE
-            const mediaDate = document.createElement('p');
-            mediaDate.textContent = date;
-            article.appendChild(mediaDate);
-
+            // const mediaDate = document.createElement('p');
+            // mediaDate.textContent = date;
+            // article.appendChild(mediaDate);
             /////////////////////////////////////////////////// TITRE + LIKES
             const comments = document.createElement('div');
             comments.className = 'comments';
@@ -55,7 +54,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 vid.setAttribute('tabindex', '0');
                 vid.className = 'media-content';
                 const source = document.createElement('source');
-                source.setAttribute("src", `assets/Sample_photos/${video}`);
+                source.setAttribute("src", `../assets/Sample_photos/${video}`);
                 source.setAttribute("type", "video/mp4");
                 vid.appendChild(source);
                 article.appendChild(vid);
@@ -104,5 +103,5 @@ function mediaFactory(datas, photographerId, mediasgrid) {
         mediasContainer.innerHTML = "";
         createAllMediasHTML();
     }
-    return { sortByPopularity, sortByTitle, sortByDate }
+    return { createAllMediasHTML, sortByPopularity, sortByTitle, sortByDate }
 }
