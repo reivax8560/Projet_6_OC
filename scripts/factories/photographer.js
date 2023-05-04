@@ -7,7 +7,7 @@ function photographerFactory(data, header, infoBox) {
         article.setAttribute("aria-label", "photographer presentation thumbnail");
         //// LIEN VERS PAGE PHOTOGRAPHE (IMG + H2)
         const link = document.createElement('a');
-        link.setAttribute("href", `photographer.html?id=${id}`);
+        link.setAttribute("href", `./photographer.html?id=${id}`);
         link.setAttribute("aria-label", name);
         const div = document.createElement('div');
         const img = document.createElement('img');
