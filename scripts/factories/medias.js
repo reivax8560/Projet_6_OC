@@ -54,7 +54,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 vid.setAttribute('tabindex', '0');
                 vid.className = 'media-content';
                 const source = document.createElement('source');
-                source.setAttribute("src", `./assets/Sample_Photos/${video}`);
+                source.setAttribute("src", `./assets/medias/${video}`);
                 source.setAttribute("type", "video/mp4");
                 vid.appendChild(source);
                 article.appendChild(vid);
@@ -62,7 +62,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 ///////////////////////////////////////////////// MEDIA PHOTO
             } else if (image) {
                 const img = document.createElement('img');
-                img.setAttribute("src", `./assets/Sample_Photos/${image}`);
+                img.setAttribute("src", `./assets/medias/${image}`);
                 img.setAttribute("alt", "");
                 img.setAttribute("data-type", 'photo');
                 img.setAttribute("data-path", image);
