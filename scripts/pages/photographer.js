@@ -1,44 +1,34 @@
 ////////////////////////////////////////////////////////// RECUPERATION ID URL
 const url = new URL(document.location);
 const urlParams = url.searchParams;
-const URL_id = urlParams.get('id');
+const photographerId = urlParams.get('id');
 ///////////////////////////////////////////////////////////// AFFICHAGE PAGE PHOTOGRAPHE /////////////////////////////////////////////////////////
 function displayPhotographerPage(photographers, medias) {
-    const currentPhotographer = photographers.find(photographer => photographer.id == URL_id);
-    const phoFactory = photographerFactory(currentPhotographer);
-    ////////////////////////////////////////////////////////////// HEADER PHOTOGRAPHE
+    const currentPhotographer = photographers.find(photographer => photographer.id == photographerId);
     const header = document.getElementById('photograph-header');
-    const headerDOM = phoFactory.getHeaderDOM();
-    header.prepend(headerDOM.divText);
-    header.append(headerDOM.divPhoto);
-    ///////////////////////////////////////////////////////////// MEDIAS PHOTOGRAPHE
-    let totalLikes = 0;
-    medias.forEach((media) => {
-        if (media.photographerId == URL_id) {
-            const medFactory = mediaFactory(media);
-            const allMedias = medFactory.getAllMedias();
-            const mediasGrid = document.getElementById('medias-grid');
-            mediasGrid.appendChild(allMedias);
-            totalLikes += media.likes;
-        }
-    });
-    ////////////////////////////////////////////////////////////// BOX-INFO (LIKES + PRIX) ////////////////////////////////////////////////////////////
-    const boxTotalLikes = document.getElementById('likesTotal');
-    boxTotalLikes.textContent = totalLikes;
     const infoBox = document.getElementById('infos-box');
-    const boxInfoDOM = phoFactory.getBoxInfoDOM();
-    infoBox.append(boxInfoDOM);
+    const phoFactory = photographerFactory(currentPhotographer, header, infoBox);
+    ////////////////////////////////////////////////////////////// HEADER PHOTOGRAPHE
+    const createHeader = phoFactory.createHeader();
+    ///////////////////////////////////////////////////////////// MEDIAS PHOTOGRAPHE
+    const mediasGrid = document.getElementById('medias-grid');
+    const medFactory = mediaFactory(medias, photographerId, mediasGrid);
+    const allMedias = medFactory.sortByPopularity();
+    ////////////////////////////////////////////////////////////// BOX-INFO (LIKES + PRIX) ////////////////////////////////////////////////////////////
+    let totalLikes = allMedias.getTotalLikes();
+    const totalLikeBox = document.getElementById('likesTotal'); // recup du paragraphe "likes" dans la box (aside > div > p+i)
+    totalLikeBox.textContent = totalLikes;
+    const createInfoBox = phoFactory.createInfoBox(); // creation du paragraphe "prix" uniquement
     ///////////////////////////////////////////////////////////////// GESTION DES LIKES ///////////////////////////////////////////////////////////////
     const mediaHearts = document.querySelectorAll('.heart-media');
     mediaHearts.forEach(heart => heart.addEventListener('click', (e) => {
         e.preventDefault();
-
         if (e.currentTarget.dataset.clicked == "false") {
             e.currentTarget.dataset.likes++;
             const likesParagraph = e.currentTarget.previousSibling;
             likesParagraph.textContent = e.currentTarget.dataset.likes;
             totalLikes++;
-            boxTotalLikes.textContent = totalLikes;
+            totalLikeBox.textContent = totalLikes;
             e.currentTarget.dataset.clicked = "true";
         }
         else {
@@ -46,36 +36,23 @@ function displayPhotographerPage(photographers, medias) {
             const likesParagraph = e.currentTarget.previousSibling;
             likesParagraph.textContent = e.currentTarget.dataset.likes;
             totalLikes--;
-            boxTotalLikes.textContent = totalLikes;
+            totalLikeBox.textContent = totalLikes;
             e.currentTarget.dataset.clicked = "false";
         }
     }))
-    /////////////////////////////////////////////////////// FONCTION DE TRI (POPULARITE, TITRE & DATE) ///////////////////////////////////////////////////////////
-    const articles = document.querySelectorAll('.article'); // nodeList
-    const articlesArray = Array.from(articles); // array
-
-    // console.log(articlesArray[2].dataset.title);
-
-    // articlesArray.sort(byPopularity);
-    // function byPopularity(a, b) {
-    //     return a.dataset.popularity - b.dataset.popularity;
-    // }
-
-    // articlesArray.sort(byTitle);         // NE FONCTIONNE PAS (chiffres qui posent problème ???)
-    // function byTitle(a, b) {
-    //     return a.dataset.title - b.dataset.title;
-    // }
-
-    // articlesArray.sort(byDate);          // FONCTIONNE SUR L'ANNEE UNIQUEMENT (RHODE DUBOIS)
-    // function byDate(a, b) {
-    //     return a.dataset.date - b.dataset.date;
-    //     // sortie => (2013-02-30   2018-07-17  2019-08-12  2019-01-02  2019-05-20  2019-07-18)
-    // }
-
-    // console.log(articlesArray);
-
-    // NOUVELLE FONCTION DANS LA MEDIAFACTORY POUR RECREER LES MEDIAS SELON LE NOUVEL ORDRE ???
-
+    //////////////////////////////////////////////////////////////// FONCTION DE TRI  //////////////////////////////////////////////////////////////////
+    const mediasSelect = document.getElementById('mediasSelect');
+    mediasSelect.addEventListener('change', () => {
+        if (mediasSelect.options[mediasSelect.selectedIndex].value == 'popularity') {
+            medFactory.sortByPopularity();
+        }
+        else if (mediasSelect.options[mediasSelect.selectedIndex].value == 'date') {
+            medFactory.sortByDate();
+        }
+        else if (mediasSelect.options[mediasSelect.selectedIndex].value == 'title') {
+            medFactory.sortByTitle();
+        }
+    })
     ///////////////////////////////////////////////////////////////////////// LIGHTBOX /////////////////////////////////////////////////////////////////
     let links = document.querySelectorAll('.media-content');
     let linksArray = Array.from(links);
@@ -85,6 +62,13 @@ function displayPhotographerPage(photographers, medias) {
         e.preventDefault();
         displayLightBox(e.currentTarget);
         currentImgIndex = linksArray.indexOf(e.currentTarget);
+    }));
+    links.forEach(link => link.addEventListener('keyup', (e) => {
+        e.preventDefault();
+        if (e.key === 'Enter') {
+            displayLightBox(e.currentTarget);
+            currentImgIndex = linksArray.indexOf(e.currentTarget);
+        }
     }));
     ////////////////////////////////////////////////////////////// BOUTONS PREV / NEXT 
     const prevBtn = document.getElementById("previous");
@@ -113,7 +97,7 @@ closeLB.addEventListener('keyup', (e) => {
 /////////////////////////////////////////////// AJOUT NOM DU PHOTOGRAPHE
 function displayFormTitle(photographers) {
     const modalTitle = document.getElementById('modalTitle');
-    const currentPhotographer = photographers.find(photographer => photographer.id == URL_id);
+    const currentPhotographer = photographers.find(photographer => photographer.id == photographerId);
     const photographer = photographerFactory(currentPhotographer);
     const name = photographer.name;
     const br = document.createElement('br');
@@ -133,8 +117,10 @@ openForm.addEventListener('keyup', (e) => {
 closeForm.addEventListener("click", () => {
     closeModal();
 });
-closeForm.addEventListener('keyup', (e) => {
+closeForm.addEventListener('keydown', (e) => {
+
     if (e.key === 'Enter') {
+        console.log(e.key);
         closeModal();
     }
 });

@@ -1,4 +1,4 @@
-function photographerFactory(data) {
+function photographerFactory(data, header, infoBox) {
     const { name, id, city, country, tagline, price, portrait } = data;
     const picture = `../assets/photographers/${portrait}`;
     /////////////////////////////// CREATION VIGNETTE PHOTOGRAPHE (PAGE ACCUEIL)
@@ -39,7 +39,7 @@ function photographerFactory(data) {
         return (article);
     }
     ///////////////////////////// CREATION HEADER PHOTOGRAPHE (PAGE PHOTOGRAPHE)
-    function getHeaderDOM() {
+    function createHeader() {
         const divText = document.createElement('div');
         divText.className = 'div-text';
         const p2 = document.createElement('p');
@@ -63,14 +63,16 @@ function photographerFactory(data) {
         img.className = 'portrait';
         divPhoto.appendChild(img);
         ///////////////////////////////////////
-        return { divText, divPhoto }
+        header.prepend(divText);
+        header.append(divPhoto);
     }
     ////////////////////////////////////////////////// CREATION PRIX PHOTOGRAPHE
-    function getBoxInfoDOM() {
+    function createInfoBox() {
         const priceParagraph = document.createElement('p');
         priceParagraph.textContent = `${price}€ / jour`;
-        return priceParagraph;
+        // return priceParagraph;
+        infoBox.append(priceParagraph);
     }
 
-    return { name, picture, getUserCardDOM, getHeaderDOM, getBoxInfoDOM }
+    return { name, picture, getUserCardDOM, createHeader, createInfoBox }
 }
