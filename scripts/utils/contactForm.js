@@ -13,33 +13,31 @@ const errorEmail = document.getElementById('errorEmail');
 const message = document.getElementById('message');
 const header = document.getElementById('header');
 const main = document.getElementById('main');
-const modal = document.getElementById("contact_modal");
+const modalBg = document.getElementById("modalBg");
 const closeForm = document.getElementById("closeForm");
 const openForm = document.getElementById('openForm');
+const modal = document.getElementById("modal");
 /////////////////////////////////////////////////////////////////////// REGEX
 const regex1 = /^([A-Za-zàâéèëêïîôùüçœ\-\']){2,}$/; // nom prenom
 const regex2 = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // email
-
 ////////////////////////////////////////////////////////////// AFFICHER MODALE
 function displayModal() {
-    modal.style.display = "block";
-    modal.setAttribute('aria-hidden', 'false');
+    modalBg.style.display = "block";
+    modalBg.setAttribute('aria-hidden', 'false');
     header.setAttribute('aria-hidden', 'true');
     main.setAttribute('aria-hidden', 'true');
-    closeForm.focus();
     body.className = "body-scroll-none";
+    modal.focus();
 }
 //////////////////////////////////////////////////////////////// FERMER MODALE
 function closeModal() {
-    modal.style.display = "none";
-    modal.setAttribute('aria-hidden', 'true');
+    modalBg.style.display = "none";
+    modalBg.setAttribute('aria-hidden', 'true');
     header.setAttribute('aria-hidden', 'false');
     main.setAttribute('aria-hidden', 'false');
     body.className = "";
     openForm.focus();
-    // faut il faire un removeEventListener pour l'accès au clavier ???
 }
-
 //////////////////////////////////////////////////// VERIFICATION DU FORMULAIRE
 
 function checkFirstName(e) {

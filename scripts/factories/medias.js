@@ -14,6 +14,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
             article.setAttribute('data-popularity', likes);
             article.setAttribute('data-title', title);
             article.setAttribute('data-date', date);
+            article.setAttribute('role', 'link');
             //////////////////////////////////////////////////// TITRE MEDIA
             const mediaName = document.createElement('p');
             mediaName.textContent = title;
@@ -52,6 +53,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 vid.setAttribute("data-path", video);
                 vid.setAttribute("data-title", title);
                 vid.setAttribute('tabindex', '0');
+                vid.setAttribute('aria-label', `${title}, closeup view`);
                 vid.className = 'media-content';
                 const source = document.createElement('source');
                 source.setAttribute("src", `./assets/medias/${video}`);
@@ -68,6 +70,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 img.setAttribute("data-path", image);
                 img.setAttribute("data-title", title);
                 img.setAttribute('tabindex', '0');
+                img.setAttribute('aria-label', `${title}, closeup view`);
                 img.className = 'media-content';
                 article.appendChild(img);
                 article.appendChild(comments);

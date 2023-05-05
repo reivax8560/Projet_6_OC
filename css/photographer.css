@@ -211,7 +211,7 @@ main {
 }
 
 /*//////////////////////////// MODAL  ///////////////////////////*/
-#contact_modal {
+#modalBg {
     display: none;
     background: rgba(128, 128, 128, 0.5);
     position: fixed;
@@ -249,7 +249,7 @@ main {
     margin: 0 0 1.2em 0;
 }
 
-.modal header h2 {
+.modal header h1 {
     font-size: 2.3em;
     font-weight: bold;
     text-align: left;

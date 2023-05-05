@@ -70,17 +70,41 @@ function displayPhotographerPage(photographers, medias) {
             currentImgIndex = linksArray.indexOf(e.currentTarget);
         }
     }));
-    ////////////////////////////////////////////////////////////// BOUTONS PREV / NEXT 
+    ////////////////////////////////////////////////////////////// BOUTONS PREVIOUS MEDIA
     const prevBtn = document.getElementById("previous");
     const nextBtn = document.getElementById("nextBtn");
-    // let currentImgIndex = 0;
     prevBtn.addEventListener("click", () => {
         currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
         displayLightBox(links[currentImgIndex]);
     });
+    prevBtn.addEventListener("keyup", (e) => {
+        if (e.key === 'Enter') {
+            currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
+            displayLightBox(links[currentImgIndex]);
+        }
+    });
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowLeft' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
+            currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
+            displayLightBox(links[currentImgIndex]);
+        }
+    });
+    ////////////////////////////////////////////////////////////// BOUTONS NEXT MEDIA
     nextBtn.addEventListener("click", () => {
         currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
         displayLightBox(links[currentImgIndex]);
+    });
+    nextBtn.addEventListener("keyup", (e) => {
+        if (e.key === 'Enter') {
+            currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
+            displayLightBox(links[currentImgIndex]);
+        }
+    });
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowRight' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
+            currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
+            displayLightBox(links[currentImgIndex]);
+        }
     });
 }
 /////////////////////////////////////////////////////////////////// FERMETURE LIGHTBOX
@@ -89,6 +113,11 @@ closeLB.addEventListener("click", () => {
 });
 closeLB.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
+        closeLightbox();
+    }
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
         closeLightbox();
     }
 });
@@ -117,10 +146,16 @@ openForm.addEventListener('keyup', (e) => {
 closeForm.addEventListener("click", () => {
     closeModal();
 });
-closeForm.addEventListener('keydown', (e) => {
-
-    if (e.key === 'Enter') {
-        console.log(e.key);
+////////////////// FERMETURE AU CLAVIER 
+closeForm.addEventListener('keyup', (e) => {
+    if (e.key == 'Enter') {
+        closeModal();
+    }
+});
+////////////////// FERMETURE AVEC ECHAP
+const contactModal = document.getElementById("modalBg");
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && contactModal.getAttribute('aria-hidden') == 'false') {
         closeModal();
     }
 });

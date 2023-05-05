@@ -4,7 +4,7 @@ function photographerFactory(data, header, infoBox) {
     /////////////////////////////// CREATION VIGNETTE PHOTOGRAPHE (PAGE ACCUEIL)
     function getUserCardDOM() {
         const article = document.createElement('article');
-        article.setAttribute("aria-label", "photographer presentation thumbnail");
+        article.setAttribute("role", "link");
         //// LIEN VERS PAGE PHOTOGRAPHE (IMG + H2)
         const link = document.createElement('a');
         link.setAttribute("href", `./photographer.html?id=${id}`);
@@ -52,7 +52,7 @@ function photographerFactory(data, header, infoBox) {
         divText.prepend(p1);
         const h1 = document.createElement('h1');
         h1.className = 'name';
-        h1.setAttribute("aria-label", "photographer's name");
+        // h1.setAttribute("aria-label", "photographer's name");
         h1.textContent = name;
         divText.prepend(h1);
         ////////////////////////////////////////
@@ -60,6 +60,7 @@ function photographerFactory(data, header, infoBox) {
         divPhoto.className = 'div-photo';
         const img = document.createElement('img');
         img.setAttribute("src", picture);
+        img.setAttribute("alt", "");
         img.className = 'portrait';
         divPhoto.appendChild(img);
         ///////////////////////////////////////

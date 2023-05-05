@@ -13,14 +13,14 @@
 <body>
   <!-------------------------------------------------- HEADER -------------------------------------------------------->
   <header id="header" aria-hidden="false">
-    <a href="index.html" aria-label="Fisheye Home page">
-      <img src="assets/images/logo.png" class="logo" alt="Fisheye Home page" />
+    <a href="./index.html" aria-label="Fisheye Home page">
+      <img src="./assets/images/logo.png" class="logo" alt="Fisheye Home page" />
     </a>
   </header>
   <!-------------------------------------------------- MAIN -------------------------------------------------------->
   <main id="main" aria-hidden="false">
     <section class=" photograph-header" id="photograph-header">
-      <button class="contact_button" id="openForm">Contactez-moi</button>
+      <button class="contact_button" id="openForm" aria-label="contact me">Contactez-moi</button>
     </section>
     <section class="photograph-medias" id="photograph-medias">
       <form class="conteneur-select">
@@ -42,50 +42,51 @@
     </div>
   </aside>
   <!-------------------------------------------------- MODAL FORM -------------------------------------------------------->
-  <div id="contact_modal" class="contact_modal" role="dialog" aria-hidden="true">
-    <div class="modal">
+  <div id="modalBg" class="modalBg" aria-hidden="true">
+    <div class="modal" id="modal" role="dialog" aria-labelledby="modalTitle" tabindex="0">
       <header>
-        <h2 id="modalTitle">Contactez-moi</h2>
-        <img src="assets/icons/close.svg" id="closeForm" tabindex="0" />
+        <h1 id="modalTitle">Contactez-moi</h1>
+        <img src="./assets/icons/close.svg" id="closeForm" role="button" aria-label="close contact form" tabindex="0" />
       </header>
       <form method="GET" action="photographer.html" id="form" class="form">
         <div id="firstNameDiv">
-          <label for="firstName">Prénom</label>
+          <label for="firstName" aria-label="first name">Prénom</label>
           <input type="text" id="firstName" />
           <span id="errorFirstName" class="error"></span>
         </div>
         <div id="lastNameDiv">
-          <label for="lastName">Nom</label>
+          <label for="lastName" aria-label="last name">Nom</label>
           <input type="text" id="lastName" />
           <span id="errorLastName" class="error"></span>
         </div>
         <div id="emailDiv">
-          <label for="email">Email</label>
+          <label for="email" aria-label="email">Email</label>
           <input type="text" id="email" />
           <span id="errorEmail" class="error"></span>
         </div>
         <div id="messageDiv">
-          <label for="message">Votre message</label>
+          <label for="message" aria-label="your message">Votre message</label>
           <textarea id="message" rows="4"></textarea>
         </div>
-        <button type="submit" class="contact_button submit_button">Envoyer</button>
+        <button type="submit" class="contact_button submit_button" aria-label="send">Envoyer</button>
       </form>
     </div>
   </div>
   <!-------------------------------------------------- LIGHTBOX -------------------------------------------------------->
-  <div id="lightbox_bg" class="lightbox_bg" role="dialog" aria-hidden="true">
-
-    <ul class="lightBox" id="lightBox">
-      <li class="item" id="item" role="dialog" aria-label="image closeup view">
+  <div id="lightbox_bg" class="lightbox_bg" aria-hidden="true">
+    <div class="lightBox" id="lightBox" role="dialog" aria-label="image closeup view" tabindex="0">
+      <div class="item" id="item">
         <i class="fa-solid fa-xmark fa-2x close" id="closeLB" tabindex="0" role="button" aria-label="close dialog"></i>
         <!-- <span class="close" id="closeLB" tabindex="0">X</span> -->
-        <i class="fa-solid fa-chevron-left fa-2x previous" id="previous" role="link" aria-label="previous image"></i>
+        <i class="fa-solid fa-chevron-left fa-2x previous" id="previous" tabindex="0" role="link"
+          aria-label="previous image"></i>
         <!-- <SPan class="previous" id="previous">Prev</SPan> -->
         <div class="mediaContainer" id="mediaContainer"></div>
-        <i class="fa-solid fa-chevron-right fa-2x next" id="nextBtn" role="link" aria-label="next image"></i>
+        <i class="fa-solid fa-chevron-right fa-2x next" id="nextBtn" tabindex="0" role="link"
+          aria-label="next image"></i>
         <!-- <span class="next" id="nextBtn">Next</span> -->
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 
   <script src="./scripts/utils/request.js"></script>
