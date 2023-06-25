@@ -1,3 +1,5 @@
+let totalLikes;
+const totalLikesTag = document.getElementById('likesTotal');
 ////////////////////////////////////////////////////////// RECUPERATION ID URL
 const url = new URL(document.location);
 const urlParams = url.searchParams;
@@ -5,125 +7,150 @@ const photographerId = urlParams.get('id');
 ///////////////////////////////////////////////////////////// AFFICHAGE PAGE PHOTOGRAPHE /////////////////////////////////////////////////////////
 function displayPhotographerPage(photographers, medias) {
     const currentPhotographer = photographers.find(photographer => photographer.id == photographerId);
+    const phoFactory = photographerFactory(currentPhotographer);
+    /////////////////////////////////////////////////////////////////////////////// HEADER PHOTOGRAPHE
     const header = document.getElementById('photograph-header');
-    const infoBox = document.getElementById('infos-box');
-    const phoFactory = photographerFactory(currentPhotographer, header, infoBox);
-    ////////////////////////////////////////////////////////////// HEADER PHOTOGRAPHE
-    const createHeader = phoFactory.createHeader();
-    ///////////////////////////////////////////////////////////// MEDIAS PHOTOGRAPHE
+    phoFactory.createHeader(header);
+    /////////////////////////////////////////////////////////////////////////////// MEDIAS PHOTOGRAPHE
+    const currentMedias = medias.filter((currentMedias) => currentMedias.photographerId == photographerId);
     const mediasGrid = document.getElementById('medias-grid');
-    const medFactory = mediaFactory(medias, photographerId, mediasGrid);
-    const allMedias = medFactory.createAllMediasHTML();
-    ////////////////////////////////////////////////////////////// BOX-INFO (LIKES + PRIX) ////////////////////////////////////////////////////////////
-    let totalLikes = allMedias.getTotalLikes();
-    const totalLikeBox = document.getElementById('likesTotal'); // recup du paragraphe "likes" dans la box (aside > div > p+i)
-    totalLikeBox.textContent = totalLikes;
-    const createInfoBox = phoFactory.createInfoBox(); // creation du paragraphe "prix" uniquement
-    ///////////////////////////////////////////////////////////////// GESTION DES LIKES ///////////////////////////////////////////////////////////////
-    const mediaHearts = document.querySelectorAll('.heart-media');
-    mediaHearts.forEach(heart => heart.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (e.currentTarget.dataset.clicked == "false") {
-            e.currentTarget.dataset.likes++;
-            const likesParagraph = e.currentTarget.previousSibling;
-            likesParagraph.textContent = e.currentTarget.dataset.likes;
-            totalLikes++;
-            totalLikeBox.textContent = totalLikes;
-            e.currentTarget.dataset.clicked = "true";
+    const medFactory = mediaFactory(currentMedias, mediasGrid);
+    const allMedias = medFactory.displayMedias();
+    /////////////////////////////////////////////////////////////////////////////// LIKES PHOTOGRAPHE (INFOBOX)
+    totalLikes = allMedias.getTotalLikes();
+    totalLikesTag.textContent = totalLikes;
+    /////////////////////////////////////////////////////////////////////////////// PRIX PHOTOGRAPHE (INFOBOX)
+    const infoBox = document.getElementById('infos-box');
+    const priceParagraph = document.createElement('p');
+    priceParagraph.textContent = `${currentPhotographer.price}€ / jour`;
+    infoBox.append(priceParagraph);
+    ////////////////////////////////////////////////////////////////////////////// FONCTION DE TRI
+    const sortButton = document.getElementById('sortButton');
+    sortButton.addEventListener('change', () => {
+        switch (sortButton.options[sortButton.selectedIndex].value) {
+            case 'popularity':
+                medFactory.sortByPopularity();
+                break;
+            case 'date':
+                medFactory.sortByDate();
+                break;
+            case 'title':
+                medFactory.sortByTitle();
+                break;
         }
-        else {
-            e.currentTarget.dataset.likes--;
-            const likesParagraph = e.currentTarget.previousSibling;
-            likesParagraph.textContent = e.currentTarget.dataset.likes;
-            totalLikes--;
-            totalLikeBox.textContent = totalLikes;
-            e.currentTarget.dataset.clicked = "false";
-        }
-    }))
-    //////////////////////////////////////////////////////////////// FONCTION DE TRI  //////////////////////////////////////////////////////////////////
-    const mediasSelect = document.getElementById('mediasSelect');
-    mediasSelect.addEventListener('change', () => {
-        if (mediasSelect.options[mediasSelect.selectedIndex].value == 'popularity') {
-            medFactory.sortByPopularity();
-        }
-        else if (mediasSelect.options[mediasSelect.selectedIndex].value == 'date') {
-            medFactory.sortByDate();
-        }
-        else if (mediasSelect.options[mediasSelect.selectedIndex].value == 'title') {
-            medFactory.sortByTitle();
-        }
+        addListenersOnMedias();
     })
-    ///////////////////////////////////////////////////////////////////////// LIGHTBOX /////////////////////////////////////////////////////////////////
-    let links = document.querySelectorAll('.media-content');
-    let linksArray = Array.from(links);
-    let currentImgIndex;
+}
+////////////////////////////////////////////////////// REINITIALISATION DES LISTENERS
+function addListenersOnMedias() {
+    likesHandler();
+    lightboxHandler();
+}
+///////////////////////////////////////////////////////////////// GESTION DES LIKES ///////////////////////////////////////////////////////////////
+function likesHandler() {
+    const likesButton = document.querySelectorAll('.heart-btn');
+    likesButton.forEach(heart => {
+        heart.addEventListener('click', (e) => {
+            e.preventDefault();
+            const likesIcon = e.currentTarget.querySelector("i");
+            if (likesIcon.dataset.clicked == "false") {
+                likesIcon.dataset.likes++;
+                const likesTag = e.currentTarget.previousSibling;
+                likesTag.textContent = likesIcon.dataset.likes;
+                totalLikes++;
+                totalLikesTag.textContent = totalLikes;
+                likesIcon.dataset.clicked = "true";
+            }
+            else {
+                likesIcon.dataset.likes--;
+                const likesTag = e.currentTarget.previousSibling;
+                likesTag.textContent = likesIcon.dataset.likes;
+                totalLikes--;
+                totalLikesTag.textContent = totalLikes;
+                likesIcon.dataset.clicked = "false";
+            }
+        });
+    })
+}
+///////////////////////////////////////////////////////////////////////// LIGHTBOX /////////////////////////////////////////////////////////////////
+let currentImgIndex, medias;
+////////////////////////////////////////////////////////////// AFFICHAGE LIGHTBOX
+function lightboxHandler() {
+    medias = document.querySelectorAll('.media-content');
+    let mediasArray = Array.from(medias);
 
-    links.forEach(link => link.addEventListener('click', (e) => {
+    medias.forEach(media => media.addEventListener('click', (e) => {
         e.preventDefault();
         displayLightBox(e.currentTarget);
-        currentImgIndex = linksArray.indexOf(e.currentTarget);
+        currentImgIndex = mediasArray.indexOf(e.currentTarget);
     }));
-    links.forEach(link => link.addEventListener('keyup', (e) => {
+
+    medias.forEach(media => media.addEventListener('keyup', (e) => {
         e.preventDefault();
         if (e.key === 'Enter') {
             displayLightBox(e.currentTarget);
-            currentImgIndex = linksArray.indexOf(e.currentTarget);
+            currentImgIndex = mediasArray.indexOf(e.currentTarget);
         }
     }));
-    ////////////////////////////////////////////////////////////// BOUTONS PREVIOUS MEDIA
-    const prevBtn = document.getElementById("previous");
-    const nextBtn = document.getElementById("nextBtn");
-    prevBtn.addEventListener("click", () => {
-        currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
-        displayLightBox(links[currentImgIndex]);
-    });
-    prevBtn.addEventListener("keyup", (e) => {
-        if (e.key === 'Enter') {
-            currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
-            displayLightBox(links[currentImgIndex]);
-        }
-    });
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowLeft' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
-            currentImgIndex = currentImgIndex < 1 ? links.length - 1 : currentImgIndex - 1;
-            displayLightBox(links[currentImgIndex]);
-        }
-    });
-    ////////////////////////////////////////////////////////////// BOUTONS NEXT MEDIA
-    nextBtn.addEventListener("click", () => {
-        currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
-        displayLightBox(links[currentImgIndex]);
-    });
-    nextBtn.addEventListener("keyup", (e) => {
-        if (e.key === 'Enter') {
-            currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
-            displayLightBox(links[currentImgIndex]);
-        }
-    });
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'ArrowRight' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
-            currentImgIndex = currentImgIndex >= links.length - 1 ? 0 : currentImgIndex + 1;
-            displayLightBox(links[currentImgIndex]);
-        }
-    });
 }
+////////////////////////////////////////////////////////////// PREVIOUS MEDIA
+const prevBtn = document.getElementById("previous");
+const nextBtn = document.getElementById("nextBtn");
+prevBtn.addEventListener("click", () => {
+    medias[currentImgIndex].dataset.onfocus = "";
+    currentImgIndex = currentImgIndex < 1 ? medias.length - 1 : currentImgIndex - 1;
+    displayLightBox(medias[currentImgIndex]);
+});
+prevBtn.addEventListener("keyup", (e) => {
+    if (e.key === 'Enter') {
+        medias[currentImgIndex].dataset.onfocus = "";
+        currentImgIndex = currentImgIndex < 1 ? medias.length - 1 : currentImgIndex - 1;
+        displayLightBox(medias[currentImgIndex]);
+    }
+});
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
+        medias[currentImgIndex].dataset.onfocus = "";
+        currentImgIndex = currentImgIndex < 1 ? medias.length - 1 : currentImgIndex - 1;
+        displayLightBox(medias[currentImgIndex]);
+    }
+});
+////////////////////////////////////////////////////////////// NEXT MEDIA
+nextBtn.addEventListener("click", () => {
+    medias[currentImgIndex].dataset.onfocus = "";
+    currentImgIndex = currentImgIndex >= medias.length - 1 ? 0 : currentImgIndex + 1;
+    displayLightBox(medias[currentImgIndex]);
+});
+nextBtn.addEventListener("keyup", (e) => {
+    if (e.key === 'Enter') {
+        medias[currentImgIndex].dataset.onfocus = "";
+        currentImgIndex = currentImgIndex >= medias.length - 1 ? 0 : currentImgIndex + 1;
+        displayLightBox(medias[currentImgIndex]);
+    }
+});
+document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowRight' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
+        medias[currentImgIndex].dataset.onfocus = "";
+        currentImgIndex = currentImgIndex >= medias.length - 1 ? 0 : currentImgIndex + 1;
+        displayLightBox(medias[currentImgIndex]);
+    }
+});
 /////////////////////////////////////////////////////////////////// FERMETURE LIGHTBOX
 closeLB.addEventListener("click", () => {
-    closeLightbox();
+    closeLightbox(medias);
 });
 closeLB.addEventListener('keyup', (e) => {
     if (e.key === 'Enter') {
-        closeLightbox();
+        closeLightbox(medias);
     }
 });
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && lightbox_bg.getAttribute('aria-hidden') == 'false') {
-        closeLightbox();
+        closeLightbox(medias);
     }
 });
 /////////////////////////////////////////////////////////////////// MODALE //////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////// AJOUT NOM DU PHOTOGRAPHE
+////////////////////////////////////////////////////// AJOUT NOM DU PHOTOGRAPHE
 function displayFormTitle(photographers) {
     const modalTitle = document.getElementById('modalTitle');
     const currentPhotographer = photographers.find(photographer => photographer.id == photographerId);
@@ -146,20 +173,18 @@ openForm.addEventListener('keyup', (e) => {
 closeForm.addEventListener("click", () => {
     closeModal();
 });
-////////////////// FERMETURE AU CLAVIER 
 closeForm.addEventListener('keyup', (e) => {
     if (e.key == 'Enter') {
         closeModal();
     }
 });
-////////////////// FERMETURE AVEC ECHAP
 const contactModal = document.getElementById("modalBg");
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && contactModal.getAttribute('aria-hidden') == 'false') {
         closeModal();
     }
 });
-///////////////////////////////////////////////////////// VALIDATION FORMULAIRE
+////////////////////////////////////////////////////// VALIDATION FORMULAIRE
 firstName.addEventListener('input', checkFirstName, false);
 lastName.addEventListener('input', checkLastName, false);
 email.addEventListener('input', checkEmail, false);
@@ -169,5 +194,6 @@ async function initPhotographer() {
     const { photographers, medias } = await getPhotographers();
     displayPhotographerPage(photographers, medias);
     displayFormTitle(photographers);
+    addListenersOnMedias();
 }
 initPhotographer();

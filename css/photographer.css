@@ -137,26 +137,12 @@ main {
     margin-top: 30px;
 }
 
-/* .article {
-    text-decoration: none;
-} */
-
-/* .article {
-    text-align: center;
-} */
-
 .media-content {
     height: 300px;
     width: 340px;
     object-fit: cover;
     border-radius: 5px;
 }
-
-/* .video {
-    border-radius: 5px;
-    height: 300px;
-    width: 340px;
-} */
 
 .comments {
     display: flex;
@@ -177,18 +163,23 @@ main {
     align-items: center;
 }
 
-.likes-media {
+.nb-likes {
     color: #901C1C;
     font-size: 22px;
     margin: 0 5px 0 0;
     font-weight: bold;
 }
 
-.heart-media {
+.heart-btn {
+    border: none;
+    background: white;
+}
+
+.heart-icon {
     color: #901C1C;
 }
 
-/*///////////////////////////////////////////////////////////*/
+/*//////////////////////////// INFOBOX ///////////////////////////////*/
 .box-informations {
     background: #D3573C;
     position: fixed;
@@ -201,16 +192,18 @@ main {
     font-weight: bold;
     border-radius: 5px;
 }
+
 .likes {
     display: flex;
     align-items: center;
 }
+
 .heart-in-box {
     color: black;
     margin-left: 10px;
 }
 
-/*//////////////////////////// MODAL  ///////////////////////////*/
+/*//////////////////////////// MODALE CONTACT  ///////////////////////////*/
 #modalBg {
     display: none;
     background: rgba(128, 128, 128, 0.5);
@@ -228,18 +221,14 @@ main {
     transform: translate(-50%, -50%);
     background-color: #DB8876;
     width: 35%;
-    /* height: 90%; */
     max-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-between; */
     padding: 35px;
     margin: auto;
     border-radius: 5px;
     box-sizing: border-box;
-    /* height: 100vh;
-    overflow-y: hidden; */
 }
 
 .modal header {
@@ -281,7 +270,6 @@ main {
     flex-direction: column;
     width: 100%;
     align-items: self-start;
-    /* margin-bottom: 3em; */
     margin: 0 0 0.5em 0;
 }
 
@@ -377,8 +365,8 @@ main {
 }
 
 .slide {
-    width: 700px;
-    height: 550px;
+    width: 600px;
+    height: 500px;
     object-fit: cover;
     margin: 5px 20px 5px 20px;
 }

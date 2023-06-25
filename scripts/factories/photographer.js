@@ -1,4 +1,4 @@
-function photographerFactory(data, header, infoBox) {
+function photographerFactory(data) {
     const { name, id, city, country, tagline, price, portrait } = data;
     const picture = `./assets/photographers/${portrait}`;
     /////////////////////////////// CREATION VIGNETTE PHOTOGRAPHE (PAGE ACCUEIL)
@@ -12,7 +12,7 @@ function photographerFactory(data, header, infoBox) {
         const div = document.createElement('div');
         const img = document.createElement('img');
         img.setAttribute("src", picture);
-        img.setAttribute("alt", "");
+        img.setAttribute("alt", name);
         const h2 = document.createElement('h2');
         h2.setAttribute("aria-label", "photographer's name");
         h2.textContent = name;
@@ -39,7 +39,7 @@ function photographerFactory(data, header, infoBox) {
         return (article);
     }
     ///////////////////////////// CREATION HEADER PHOTOGRAPHE (PAGE PHOTOGRAPHE)
-    function createHeader() {
+    function createHeader(header) {
         const divText = document.createElement('div');
         divText.className = 'div-text';
         const p2 = document.createElement('p');
@@ -52,7 +52,6 @@ function photographerFactory(data, header, infoBox) {
         divText.prepend(p1);
         const h1 = document.createElement('h1');
         h1.className = 'name';
-        // h1.setAttribute("aria-label", "photographer's name");
         h1.textContent = name;
         divText.prepend(h1);
         ////////////////////////////////////////
@@ -67,13 +66,5 @@ function photographerFactory(data, header, infoBox) {
         header.prepend(divText);
         header.append(divPhoto);
     }
-    ////////////////////////////////////////////////// CREATION PRIX PHOTOGRAPHE
-    function createInfoBox() {
-        const priceParagraph = document.createElement('p');
-        priceParagraph.textContent = `${price}€ / jour`;
-        // return priceParagraph;
-        infoBox.append(priceParagraph);
-    }
-
-    return { name, picture, getUserCardDOM, createHeader, createInfoBox }
+    return { name, picture, getUserCardDOM, createHeader }
 }

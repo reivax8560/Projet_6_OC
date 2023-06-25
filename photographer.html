@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -24,8 +24,8 @@
     </section>
     <section class="photograph-medias" id="photograph-medias">
       <form class="conteneur-select">
-        <label for="mediasSelect" class="select-label">Trier par</label>
-        <select name="medias" id="mediasSelect" class="select" aria-label="Order by">
+        <label for="sortButton" class="select-label">Trier par</label>
+        <select name="medias" id="sortButton" class="select" aria-label="Order by">
           <option value="popularity" selected>Popularité</option>
           <option value="date">Date</option>
           <option value="title">Titre</option>
@@ -77,14 +77,14 @@
     <div class="lightBox" id="lightBox" role="dialog" aria-label="image closeup view" tabindex="0">
       <div class="item" id="item">
         <i class="fa-solid fa-xmark fa-2x close" id="closeLB" tabindex="0" role="button" aria-label="close dialog"></i>
-        <!-- <span class="close" id="closeLB" tabindex="0">X</span> -->
+        <!-- <button type="button" class="close" id="closeLB">X</button> -->
         <i class="fa-solid fa-chevron-left fa-2x previous" id="previous" tabindex="0" role="link"
           aria-label="previous image"></i>
-        <!-- <SPan class="previous" id="previous">Prev</SPan> -->
+        <!-- <button type="button" class="previous" id="previous">Prev</button> -->
         <div class="mediaContainer" id="mediaContainer"></div>
         <i class="fa-solid fa-chevron-right fa-2x next" id="nextBtn" tabindex="0" role="link"
           aria-label="next image"></i>
-        <!-- <span class="next" id="nextBtn">Next</span> -->
+        <!-- <button type="button" class="next" id="nextBtn">Next</button> -->
       </div>
     </div>
   </div>

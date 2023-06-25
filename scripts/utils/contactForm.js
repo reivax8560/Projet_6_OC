@@ -76,6 +76,9 @@ function checkForm(e) {
         errorEmail.className = "error active";
         // event.preventDefault();
     } else {
-        console.log(`${firstName.value} ${lastName.value} ${email.value} ${message.value}`);
+        console.log(`${firstName.value}`);
+        console.log(`${lastName.value}`);
+        console.log(`${email.value}`);
+        console.log(`${message.value}`);
     }
 };

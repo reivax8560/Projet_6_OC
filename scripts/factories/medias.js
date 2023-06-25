@@ -1,11 +1,9 @@
 //////////////////////////////// CREATION DU MEDIA ////////////////////////////
-function mediaFactory(datas, photographerId, mediasgrid) {
-    const medias = datas.filter((data) => data.photographerId == photographerId);
-    const mediasContainer = mediasgrid;
+function mediaFactory(currentMedias, mediasgrid) {
 
-    function createAllMediasHTML() {
+    function displayMedias() {
         let totalLikes = 0;
-        medias.forEach(media => {
+        currentMedias.forEach(media => {
             const { id, photographerId, title, image, video, likes, date, price } = media;
             totalLikes += likes;
             //////////////////////////////////////////////////// ARTICLE
@@ -22,23 +20,23 @@ function mediaFactory(datas, photographerId, mediasgrid) {
             //////////////////////////////////////////////////// LIKES MEDIA
             const mediaLikes = document.createElement('p');
             mediaLikes.textContent = likes;
-            mediaLikes.className = 'likes-media';
+            mediaLikes.className = 'nb-likes';
+
+            const heartBtn = document.createElement("button");
+            heartBtn.className = "heart-btn";
+            heartBtn.setAttribute("aria-label", "likes");
+            heartBtn.setAttribute('tabindex', '0');
 
             const heartIcon = document.createElement('i');
-            heartIcon.className = 'fa-solid fa-heart fa-lg heart-media';
-            heartIcon.setAttribute("aria-label", "likes");
+            heartIcon.className = 'fa-solid fa-heart fa-lg heart-icon';
             heartIcon.setAttribute('data-likes', likes);
             heartIcon.setAttribute('data-clicked', false);
-            heartIcon.setAttribute('tabindex', '0');
 
             const divLikes = document.createElement('div');
             divLikes.className = 'div-likes';
             divLikes.appendChild(mediaLikes);
-            divLikes.appendChild(heartIcon);
-            /////////////////////////////////////////////////// DATE
-            // const mediaDate = document.createElement('p');
-            // mediaDate.textContent = date;
-            // article.appendChild(mediaDate);
+            divLikes.appendChild(heartBtn);
+            heartBtn.appendChild(heartIcon);
             /////////////////////////////////////////////////// TITRE + LIKES
             const comments = document.createElement('div');
             comments.className = 'comments';
@@ -48,7 +46,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
             if (video) {
                 const vid = document.createElement('video');
                 vid.setAttribute("controls", "");
-                vid.setAttribute("alt", "");
+                vid.setAttribute("alt", title);
                 vid.setAttribute("data-type", 'video');
                 vid.setAttribute("data-path", video);
                 vid.setAttribute("data-title", title);
@@ -65,7 +63,7 @@ function mediaFactory(datas, photographerId, mediasgrid) {
             } else if (image) {
                 const img = document.createElement('img');
                 img.setAttribute("src", `./assets/medias/${image}`);
-                img.setAttribute("alt", "");
+                img.setAttribute("alt", title);
                 img.setAttribute("data-type", 'photo');
                 img.setAttribute("data-path", image);
                 img.setAttribute("data-title", title);
@@ -75,36 +73,39 @@ function mediaFactory(datas, photographerId, mediasgrid) {
                 article.appendChild(img);
                 article.appendChild(comments);
             }
-            mediasContainer.appendChild(article);
+            mediasgrid.appendChild(article);
         })
+
         function getTotalLikes() {
             return (totalLikes)
         }
         return { getTotalLikes }
     }
+
     function sortByPopularity() {
         function byPopularity(a, b) {
             return b.likes - a.likes;
         }
-        medias.sort(byPopularity);
-        mediasContainer.innerHTML = "";
-        createAllMediasHTML();
+        currentMedias.sort(byPopularity);
+        mediasgrid.innerHTML = "";
+        displayMedias();
     }
     function sortByTitle() {
         function byTitle(a, b) {
             return a.title.localeCompare(b.title);
         }
-        medias.sort(byTitle);
-        mediasContainer.innerHTML = "";
-        createAllMediasHTML();
+        currentMedias.sort(byTitle);
+        mediasgrid.innerHTML = "";
+        displayMedias();
     }
     function sortByDate() {
         function byDate(a, b) {
             return new Date(b.date) - new Date(a.date);
         }
-        medias.sort(byDate);
-        mediasContainer.innerHTML = "";
-        createAllMediasHTML();
+        currentMedias.sort(byDate);
+        mediasgrid.innerHTML = "";
+        displayMedias();
     }
-    return { createAllMediasHTML, sortByPopularity, sortByTitle, sortByDate }
+
+    return { displayMedias, sortByPopularity, sortByTitle, sortByDate }
 }

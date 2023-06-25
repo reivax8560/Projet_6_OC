@@ -7,7 +7,6 @@ function displayData(photographers) {
         photographersSection.appendChild(userCardDOM);
     });
 }
-
 //////////////////////////////////////////////////////////////    FONCTION D'EXECUTION GLOBALE
 async function initIndex() {
     const { photographers } = await getPhotographers();
